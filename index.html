@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#2563eb"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="NUQA"/>
+<meta name="description" content="NUQA — تطبيق إدارة مغسلة الملابس - رصيد وطلبات واستلام من المنزل"/>
+<title>NUQA | نُقاء</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧺</text></svg>"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧺</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo','Tajawal',sans-serif;direction:rtl;background:#f1f5f9;color:#1e293b;min-height:100vh;-webkit-font-smoothing:antialiased}
+input,button,textarea,select{font-family:'Cairo',sans-serif}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+#app{min-height:100vh}
+.btn{border:none;border-radius:12px;padding:11px 18px;cursor:pointer;font-size:13px;font-weight:700;transition:.18s;display:inline-flex;align-items:center;gap:5px;justify-content:center;-webkit-appearance:none}
+.b-blue{background:#2563eb;color:#fff}.b-blue:active{background:#1d4ed8;transform:scale(.98)}
+.b-green{background:#059669;color:#fff}.b-green:active{background:#047857;transform:scale(.98)}
+.b-red{background:#dc2626;color:#fff}.b-red:active{background:#b91c1c;transform:scale(.98)}
+.b-purple{background:#7c3aed;color:#fff}.b-purple:active{background:#6d28d9;transform:scale(.98)}
+.b-wa{background:#25d366;color:#fff}.b-wa:active{background:#128c7e;transform:scale(.98)}
+.b-ghost{background:#fff;color:#64748b;border:1.5px solid #e2e8f0}.b-ghost:active{border-color:#2563eb;color:#2563eb}
+.b-sm{padding:8px 13px;font-size:12px;border-radius:9px}.b-full{width:100%}
+.inp{width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;color:#1e293b;background:#fff;outline:none;transition:.2s;-webkit-appearance:none}
+.inp:focus{border-color:#2563eb;box-shadow:0 0 0 3px #2563eb18}.inp::placeholder{color:#94a3b8}
+.sel{width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;color:#1e293b;background:#fff;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 12px center}
+.sel:focus{border-color:#2563eb}
+.card{background:#fff;border-radius:18px;border:1.5px solid #e2e8f0;box-shadow:0 1px 4px #0000000a;padding:20px}
+.row-card{background:#fff;border-radius:14px;border:1.5px solid #e2e8f0;padding:13px 15px;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;gap:12px;transition:.15s}
+.row-card:active{border-color:#93c5fd;background:#f8fafc}
+.tab-bar{display:flex;background:#fff;border-radius:16px;padding:5px;gap:3px;box-shadow:0 1px 4px #0000000a;border:1.5px solid #e2e8f0}
+.tab-btn{flex:1;padding:8px 2px;border-radius:11px;border:none;background:transparent;cursor:pointer;font-size:10px;font-weight:700;color:#94a3b8;transition:.18s;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tab-btn.on{background:#2563eb;color:#fff;box-shadow:0 2px 8px #2563eb40}
+.tab-icon{font-size:16px;line-height:1}
+.chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid #e2e8f0;background:#fff;color:#64748b;transition:.15s;white-space:nowrap}
+.chip.on{background:#2563eb;color:#fff;border-color:#2563eb}
+.svc-row{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;transition:.15s}
+.svc-row:active{border-color:#93c5fd;background:#eff6ff}
+.qty-btn{width:30px;height:30px;border-radius:8px;border:none;cursor:pointer;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;-webkit-appearance:none}
+.q-m{background:#fee2e2;color:#dc2626}.q-p{background:#dbeafe;color:#2563eb}
+.sheet-bg{position:fixed;inset:0;background:#00000060;z-index:200;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.sheet{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;padding:20px 18px 48px;-webkit-overflow-scrolling:touch}
+.handle{width:38px;height:4px;background:#e2e8f0;border-radius:4px;margin:0 auto 18px}
+.divider{height:1px;background:#f1f5f9;margin:14px 0}
+.lbl{font-size:12px;font-weight:700;color:#64748b;margin-bottom:6px}
+.toast-wrap{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:9999;pointer-events:none}
+.toast{padding:11px 22px;border-radius:14px;font-size:13px;font-weight:700;white-space:nowrap;box-shadow:0 4px 20px #0003;animation:tIn .3s ease}
+.t-s{background:#059669;color:#fff}.t-e{background:#dc2626;color:#fff}
+@keyframes tIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.wa-prev{background:#f0fdf4;border:1.5px solid #86efac;border-radius:14px;padding:14px;font-size:12px;line-height:2;white-space:pre-wrap;color:#1e293b}
+.link-box{background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:10px 14px;font-size:11px;color:#1d4ed8;font-weight:600;word-break:break-all;line-height:1.7}
+.progress-bar{height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;margin-top:4px}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#2563eb,#7c3aed);transition:.4s}
+.toggle{width:46px;height:27px;border-radius:14px;cursor:pointer;border:none;position:relative;transition:.2s;flex-shrink:0}
+.tg-on{background:#2563eb}.tg-off{background:#e2e8f0}
+.toggle::after{content:'';position:absolute;width:21px;height:21px;border-radius:50%;background:#fff;top:3px;transition:.2s;box-shadow:0 1px 4px #0002}
+.tg-on::after{right:3px}.tg-off::after{right:22px}
+.role-card{background:#fff;border-radius:20px;border:2px solid #e2e8f0;padding:22px 16px;text-align:center;cursor:pointer;transition:.2s;flex:1}
+.role-card:active{border-color:#2563eb;box-shadow:0 4px 20px #2563eb15}
+.pickup-card{background:linear-gradient(135deg,#fdf4ff,#ede9fe);border:1.5px solid #ddd6fe;border-radius:16px;padding:14px;cursor:pointer;margin-bottom:8px;transition:.15s}
+.pickup-card:active{border-color:#7c3aed}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1.5px solid #e2e8f0;padding:7px 14px 16px;z-index:50;padding-bottom:max(16px,env(safe-area-inset-bottom))}
+.page-wrap{max-width:600px;margin:0 auto;padding:16px 14px 110px}
+.header{background:#fff;border-bottom:1.5px solid #e2e8f0;padding:13px 18px;position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 6px #0000000d}
+.stat-box{background:#fff;border-radius:16px;border:1.5px solid #e2e8f0;padding:14px 10px;text-align:center;box-shadow:0 1px 4px #0000000a}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:40px;height:40px;border:4px solid #dbeafe;border-top:4px solid #2563eb;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto}
+/* PWA safe areas */
+@supports(padding:max(0px)){
+  .bottom-nav{padding-bottom:max(16px,env(safe-area-inset-bottom))}
+  .header{padding-top:max(13px,env(safe-area-inset-top))}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" data-presets="react">
+
+const { useState, useEffect, useCallback } = React;
+
+/* ─── Config (غيّر هذه القيم حسب مغسلتك) ─────────────────── */
+const CONFIG = {
+  SHOP_NAME:    "NUQA | نُقاء",
+  ADMIN_PASS:   "1234",
+  DRIVER_PHONE: "0500000000",   // ← رقم السائق — غيّره
+  PICKUP_FEE:   15,
+  DELIVERY_FEE: 15,
+  BONUS_RATE:   0.30,
+  VAT_RATE:     0.15,
+};
+
+/* ─── Helpers ─────────────────────────────────────────────── */
+const fmt    = n => Number(n||0).toFixed(2);
+const fmtPh  = v => v.replace(/\D/g,"").slice(0,10);
+const toDay  = () => new Date().toLocaleDateString("ar-SA-u-nu-latn");
+const toTime = () => new Date().toLocaleTimeString("ar-SA-u-nu-latn",{hour:"2-digit",minute:"2-digit"});
+const toWA   = p => { const d=p.replace(/\D/g,""); return d.startsWith("966")?d:d.startsWith("0")?"966"+d.slice(1):"966"+d; };
+
+const openWA = (phone, msg) => {
+  const t = encodeURIComponent(msg);
+  const a = document.createElement("a");
+  a.href = `whatsapp://send?phone=${toWA(phone)}&text=${t}`;
+  a.style.display = "none";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>window.open(`https://api.whatsapp.com/send?phone=${toWA(phone)}&text=${t}`,"_blank"),1500);
+};
+
+const makeLink = phone => {
+  const host = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "https://nuqa.vercel.app"
+    : window.location.origin;
+  return `${host}${window.location.pathname}?c=${phone}`;
+};
+
+/* ─── Storage (localStorage للحفظ الدائم) ────────────────── */
+const save = (key,val) => { try{localStorage.setItem("mghsla_"+key,JSON.stringify(val));}catch(e){} };
+const load = (key,def) => { try{const v=localStorage.getItem("mghsla_"+key);return v?JSON.parse(v):def;}catch(e){return def;} };
+
+/* ─── WA Templates ────────────────────────────────────────── */
+const WA = {
+  welcome:(name,phone)=>
+`أهلاً ${name} 👋
+*${CONFIG.SHOP_NAME}* يرحّب بك 🧺
+
+✅ تم تسجيلك بنجاح
+🎁 مكافأة *30%* على كل شحن رصيد
+🚗 خدمة *استلام وتوصيل* من منزلك متاحة!
+
+📲 *رابط حسابك — اضغطه للدخول مباشرة:*
+${makeLink(phone)}
+
+احفظ هذا الرابط 🔖`,
+
+  deposit:(name,paid,credited,bonus,balance,phone)=>
+`أهلاً ${name} 👋
+
+✅ *تم شحن رصيدك*
+💳 دفعت: ${fmt(paid)} ريال
+🎁 مكافأة 30%: +${fmt(bonus)} ريال
+💰 رصيدك الآن: *${fmt(balance)} ريال*
+
+📲 ${makeLink(phone)}
+${CONFIG.SHOP_NAME} 🧺`,
+
+  orderReady:(name,orderId,phone)=>
+`أهلاً ${name} 👋
+
+🎉 *ملابسك جاهزة للاستلام!*
+🔖 طلب رقم: *${orderId}*
+
+📲 ${makeLink(phone)}
+${CONFIG.SHOP_NAME} في انتظارك 💙`,
+
+  charge:(name,amount,balance,note,phone)=>
+`أهلاً ${name} 👋
+✅ *تمت خدمتك* — ${note}
+💳 المبلغ: ${fmt(amount)} ريال
+💰 رصيدك المتبقي: *${fmt(balance)} ريال*
+📲 ${makeLink(phone)}
+${CONFIG.SHOP_NAME} 🧺`,
+
+  lowBalance:(name,balance,phone)=>
+`أهلاً ${name} 👋
+⚠️ *رصيدك منخفض* — ${fmt(balance)} ريال
+اشحن الآن واستفد من مكافأة 30% 🎁
+📲 ${makeLink(phone)}`,
+
+  pickupConfirm:(name,id,address,time,phone)=>
+`أهلاً ${name} 👋
+
+✅ *تم تأكيد طلب الاستلام*
+🔖 رقم: *${id}*
+📍 العنوان: ${address}
+⏰ الوقت: ${time}
+
+سيتواصل معك السائق قريباً 🚗
+📲 ${makeLink(phone)}
+${CONFIG.SHOP_NAME} 🧺`,
+
+  pickupOnWay:(name,id,phone)=>
+`أهلاً ${name} 👋
+🚗 *السائق في الطريق إليك!*
+🔖 طلب رقم: *${id}*
+يرجى التواجد في العنوان المحدد.
+📲 ${makeLink(phone)}`,
+
+  deliveryOnWay:(name,id,phone)=>
+`أهلاً ${name} 👋
+🚗 *ملابسك في الطريق إليك!*
+🔖 طلب رقم: *${id}*
+سيصلك السائق خلال وقت قصير 🎉
+📲 ${makeLink(phone)}`,
+
+  driverPickup:(custName,custPhone,address,time,id)=>
+`مهمة استلام جديدة 🚗
+
+👤 الزبون: ${custName}
+📱 الجوال: ${custPhone}
+📍 العنوان: ${address}
+⏰ الوقت: ${time}
+🔖 رقم الطلب: ${id}
+
+${CONFIG.SHOP_NAME}`,
+};
+
+/* ─── Data ────────────────────────────────────────────────── */
+const SERVICES = [
+  {id:1,name:"غسيل وكوي ثوب",price:15,icon:"👘",cat:"رجالي"},
+  {id:2,name:"غسيل وكوي قميص",price:12,icon:"👔",cat:"رجالي"},
+  {id:3,name:"غسيل بنطلون",price:10,icon:"👖",cat:"رجالي"},
+  {id:4,name:"غسيل عباءة / بشت",price:35,icon:"🥻",cat:"رجالي"},
+  {id:5,name:"غسيل فستان سهرة",price:45,icon:"👗",cat:"نسائي"},
+  {id:6,name:"غسيل عباءة نسائية",price:25,icon:"🧕",cat:"نسائي"},
+  {id:7,name:"غسيل غطاء سرير",price:30,icon:"🛏️",cat:"مفروشات"},
+  {id:8,name:"غسيل بطانية",price:40,icon:"🧸",cat:"مفروشات"},
+  {id:9,name:"غسيل ستارة (م)",price:20,icon:"🪟",cat:"مفروشات"},
+  {id:10,name:"غسيل سجادة (م²)",price:25,icon:"🟫",cat:"مفروشات"},
+  {id:11,name:"تنظيف بالبخار",price:18,icon:"♨️",cat:"خاصة"},
+  {id:12,name:"إزالة بقعة صعبة",price:20,icon:"🧹",cat:"خاصة"},
+  {id:13,name:"تعطير الملابس",price:10,icon:"✨",cat:"خاصة"},
+  {id:14,name:"كي فقط",price:8,icon:"🔲",cat:"كي"},
+];
+const SVC_CATS=["الكل","رجالي","نسائي","مفروشات","خاصة","كي"];
+
+const ORDER_STATUS={
+  pending:{label:"في الانتظار",color:"#b45309",bg:"#fef9c3",dot:"#f59e0b"},
+  processing:{label:"قيد التنظيف",color:"#1d4ed8",bg:"#dbeafe",dot:"#3b82f6"},
+  ready:{label:"جاهز للاستلام",color:"#065f46",bg:"#d1fae5",dot:"#10b981"},
+  delivered:{label:"تم التسليم",color:"#374151",bg:"#f3f4f6",dot:"#9ca3af"},
+};
+const PICKUP_STATUS={
+  pending:{label:"بانتظار السائق",color:"#b45309",bg:"#fef9c3",dot:"#f59e0b"},
+  onway:{label:"السائق في الطريق",color:"#1d4ed8",bg:"#dbeafe",dot:"#3b82f6"},
+  picked:{label:"تم الاستلام",color:"#7c3aed",bg:"#ede9fe",dot:"#7c3aed"},
+  washing:{label:"قيد الغسيل",color:"#059669",bg:"#d1fae5",dot:"#10b981"},
+  delivering:{label:"جارٍ التوصيل",color:"#d97706",bg:"#fef3c7",dot:"#f59e0b"},
+  done:{label:"تم التوصيل",color:"#374151",bg:"#f3f4f6",dot:"#9ca3af"},
+};
+const TIMES=["08:00 ص","09:00 ص","10:00 ص","11:00 ص","12:00 م","01:00 م","02:00 م","03:00 م","04:00 م","05:00 م","06:00 م","07:00 م","08:00 م","09:00 م"];
+
+const getTier=t=>t>=2000?"بلاتيني 💎":t>=1000?"ذهبي 🥇":t>=400?"فضي 🥈":"عادي";
+const tierColor=t=>t?.includes("بلاتيني")?"#7c3aed":t?.includes("ذهبي")?"#d97706":t?.includes("فضي")?"#64748b":"#2563eb";
+
+const QR=({value,size=150})=>React.createElement("img",{
+  src:`https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(value)}&bgcolor=ffffff&color=1e293b&margin=6`,
+  width:size,height:size,alt:"QR",style:{borderRadius:12,display:"block"}
+});
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN APP
+═══════════════════════════════════════════════════════════ */
+function App() {
+  const [customers,setCustomers]=useState(()=>load("customers",[]));
+  const [orders,setOrders]=useState(()=>load("orders",[]));
+  const [pickups,setPickups]=useState(()=>load("pickups",[]));
+  const [txs,setTxs]=useState(()=>load("txs",[]));
+
+  const [role,setRole]=useState(null);
+  const [custPhone,setCustPhone]=useState("");
+  const [tab,setTab]=useState("home");
+  const [modal,setModal]=useState(null);
+  const [selCust,setSelCust]=useState(null);
+  const [selOrder,setSelOrder]=useState(null);
+  const [selPickup,setSelPickup]=useState(null);
+  const [toast,setToast]=useState(null);
+  const [custSearch,setCustSearch]=useState("");
+  const [orderSearch,setOrderSearch]=useState("");
+
+  const [newCust,setNewCust]=useState({name:"",phone:"",notes:""});
+  const [depositAmt,setDeposit]=useState("");
+  const [chargeAmt,setCharge]=useState("");
+  const [chargeNote,setChargeNote]=useState("");
+
+  const [oItems,setOItems]=useState([]);
+  const [oCat,setOCat]=useState("الكل");
+  const [oCust,setOCust]=useState(null);
+  const [oNotes,setONotes]=useState("");
+  const [oUrgent,setOUrgent]=useState(false);
+  const [oPay,setOPay]=useState("balance");
+
+  const [pCust,setPCust]=useState(null);
+  const [pAddress,setPAddress]=useState("");
+  const [pTime,setPTime]=useState("");
+  const [pNotes,setPNotes]=useState("");
+  const [pDelivery,setPDelivery]=useState(true);
+
+  const [loginMode,setLoginMode]=useState("choose");
+  const [adminPass,setAdminPass]=useState("");
+  const [loginErr,setLoginErr]=useState("");
+  const [custTab,setCustTab]=useState("home");
+  const [pendingAuto,setPendingAuto]=useState(null);
+
+  // Persist to localStorage
+  useEffect(()=>save("customers",customers),[customers]);
+  useEffect(()=>save("orders",orders),[orders]);
+  useEffect(()=>save("pickups",pickups),[pickups]);
+  useEffect(()=>save("txs",txs),[txs]);
+
+  const showToast=(msg,type="success")=>{setToast({msg,type});setTimeout(()=>setToast(null),3500);};
+
+  // Auto-login from URL
+  useEffect(()=>{
+    const p=new URLSearchParams(window.location.search).get("c");
+    if(p&&p.length>=9){setCustPhone(fmtPh(p));setPendingAuto(fmtPh(p));}
+  },[]);
+  useEffect(()=>{
+    if(!pendingAuto)return;
+    const c=customers.find(x=>x.phone===pendingAuto);
+    if(c){setRole("customer");setCustPhone(pendingAuto);setPendingAuto(null);}
+  },[pendingAuto,customers]);
+
+  useEffect(()=>{if(selCust){const c=customers.find(x=>x.id===selCust.id);if(c)setSelCust(c);}},[customers]);
+  useEffect(()=>{if(selOrder){const o=orders.find(x=>x.id===selOrder.id);if(o)setSelOrder(o);}},[orders]);
+  useEffect(()=>{if(selPickup){const p=pickups.find(x=>x.id===selPickup.id);if(p)setSelPickup(p);}},[pickups]);
+
+  const loginAdmin=()=>{
+    if(adminPass===CONFIG.ADMIN_PASS){setRole("admin");setAdminPass("");setLoginErr("");}
+    else setLoginErr("كلمة المرور غير صحيحة");
+  };
+  const loginCust=phone=>{
+    const c=customers.find(x=>x.phone===phone);
+    if(!c){setLoginErr("رقم الجوال غير مسجّل — تواصل مع المغسلة");return;}
+    setRole("customer");setCustPhone(phone);setLoginErr("");
+  };
+  const logout=()=>{
+    setRole(null);setCustPhone("");setLoginMode("choose");setLoginErr("");
+    setAdminPass("");setTab("home");setCustTab("home");
+    window.history.replaceState({},"",window.location.pathname);
+  };
+
+  const addCustomer=()=>{
+    const{name,phone,notes}=newCust;
+    if(!name.trim()||phone.length<9)return showToast("يرجى إدخال الاسم ورقم الجوال","error");
+    if(customers.find(c=>c.phone===phone))return showToast("رقم الجوال مسجّل مسبقاً","error");
+    const c={id:Date.now(),name:name.trim(),phone,notes,balance:0,totalDeposited:0,totalSpent:0,createdAt:toDay(),tier:"عادي"};
+    setCustomers(p=>[...p,c]);
+    setNewCust({name:"",phone:"",notes:""});
+    setModal(null);
+    showToast(`✓ تم تسجيل ${c.name}`);
+    setTimeout(()=>openWA(c.phone,WA.welcome(c.name,c.phone)),700);
+  };
+
+  const deposit=cId=>{
+    const amt=parseFloat(depositAmt);
+    if(!amt||amt<=0)return showToast("أدخل مبلغاً صحيحاً","error");
+    const bonus=+(amt*CONFIG.BONUS_RATE).toFixed(2),credited=+(amt+bonus).toFixed(2);
+    let newBal=0;
+    setCustomers(p=>p.map(c=>{
+      if(c.id!==cId)return c;
+      newBal=+(c.balance+credited).toFixed(2);
+      return{...c,balance:newBal,totalDeposited:+(c.totalDeposited+amt).toFixed(2),tier:getTier(c.totalDeposited+amt)};
+    }));
+    setTxs(p=>[...p,{id:Date.now(),cId,type:"deposit",paid:amt,credited,bonus,note:"شحن رصيد • مكافأة 30%",date:toDay(),time:toTime()}]);
+    setDeposit("");
+    const cust=customers.find(x=>x.id===cId);
+    showToast(`✓ شحن ${fmt(credited)} ريال`);
+    setTimeout(()=>openWA(cust.phone,WA.deposit(cust.name,amt,credited,bonus,newBal,cust.phone)),700);
+  };
+
+  const chargeBalance=cId=>{
+    const amt=parseFloat(chargeAmt);const c=customers.find(x=>x.id===cId);
+    if(!amt||amt<=0)return showToast("أدخل مبلغاً صحيحاً","error");
+    if(c.balance<amt)return showToast("الرصيد غير كافٍ","error");
+    const newBal=+(c.balance-amt).toFixed(2);const note=chargeNote||"خدمة غسيل";
+    setCustomers(p=>p.map(x=>x.id===cId?{...x,balance:newBal,totalSpent:+(x.totalSpent+amt).toFixed(2)}:x));
+    setTxs(p=>[...p,{id:Date.now(),cId,type:"charge",paid:amt,credited:-amt,bonus:0,note,date:toDay(),time:toTime()}]);
+    setCharge("");setChargeNote("");
+    showToast(`✓ خصم ${fmt(amt)} ريال`);
+    setTimeout(()=>openWA(c.phone,WA.charge(c.name,amt,newBal,note,c.phone)),600);
+    if(newBal<50)setTimeout(()=>openWA(c.phone,WA.lowBalance(c.name,newBal,c.phone)),2200);
+  };
+
+  const oBase=()=>oItems.reduce((s,i)=>{const sv=SERVICES.find(x=>x.id===i.sid);return s+(sv?.price||0)*i.qty;},0);
+  const oGrand=()=>{const base=oUrgent?+(oBase()*1.25).toFixed(2):oBase();const vat=+(base*CONFIG.VAT_RATE).toFixed(2);return{base,vat,grand:+(base+vat).toFixed(2)};};
+  const addOI=sid=>setOItems(p=>{const ex=p.find(x=>x.sid===sid);return ex?p.map(x=>x.sid===sid?{...x,qty:x.qty+1}:x):[...p,{sid,qty:1}];});
+  const remOI=sid=>setOItems(p=>{const ex=p.find(x=>x.sid===sid);if(!ex)return p;return ex.qty===1?p.filter(x=>x.sid!==sid):p.map(x=>x.sid===sid?{...x,qty:x.qty-1}:x);});
+  const iqty=sid=>oItems.find(x=>x.sid===sid)?.qty||0;
+
+  const submitOrder=forPhone=>{
+    const tc=customers.find(x=>x.phone===(forPhone||oCust?.phone));
+    if(!tc)return showToast("تعذّر تحديد الزبون","error");
+    if(!oItems.length)return showToast("أضف خدمة واحدة على الأقل","error");
+    const{base,vat,grand}=oGrand();
+    if(oPay==="balance"){
+      if(tc.balance<grand)return showToast("الرصيد غير كافٍ","error");
+      setCustomers(p=>p.map(x=>x.id===tc.id?{...x,balance:+(x.balance-grand).toFixed(2),totalSpent:+(x.totalSpent+grand).toFixed(2)}:x));
+      setTxs(p=>[...p,{id:Date.now(),cId:tc.id,type:"charge",paid:grand,credited:-grand,bonus:0,note:`طلب${oUrgent?" عاجل":""}`,date:toDay(),time:toTime()}]);
+    }
+    const o={id:`ORD-${String(orders.length+1).padStart(4,"0")}`,cId:tc.id,cName:tc.name,cPhone:tc.phone,items:[...oItems],base,vat,grand,urgent:oUrgent,pay:oPay,notes:oNotes,status:"pending",createdAt:toDay(),time:toTime(),history:[{status:"pending",date:toDay(),time:toTime()}]};
+    setOrders(p=>[...p,o]);
+    setOItems([]);setONotes("");setOCust(null);setOUrgent(false);setOPay("balance");setOCat("الكل");
+    setModal(null);
+    showToast(`✓ تم إنشاء الطلب ${o.id}`);
+  };
+
+  const updateOrderStatus=(oid,status)=>{
+    setOrders(p=>p.map(o=>o.id===oid?{...o,status,history:[...o.history,{status,date:toDay(),time:toTime()}]}:o));
+    showToast(`تم التحديث → ${ORDER_STATUS[status].label}`);
+    if(status==="ready"){const o=orders.find(x=>x.id===oid);if(o)setTimeout(()=>openWA(o.cPhone,WA.orderReady(o.cName,o.id,o.cPhone)),600);}
+  };
+
+  const submitPickup=forPhone=>{
+    const tc=customers.find(x=>x.phone===(forPhone||pCust?.phone));
+    if(!tc)return showToast("تعذّر تحديد الزبون","error");
+    if(!pAddress.trim())return showToast("أدخل العنوان","error");
+    if(!pTime)return showToast("اختر وقت الاستلام","error");
+    const fees=CONFIG.PICKUP_FEE+(pDelivery?CONFIG.DELIVERY_FEE:0);
+    const vat=+(fees*CONFIG.VAT_RATE).toFixed(2);
+    const total=+(fees+vat).toFixed(2);
+    if(tc.balance<total)return showToast(`الرصيد غير كافٍ — مطلوب ${fmt(total)} ر.س`,"error");
+    setCustomers(p=>p.map(x=>x.id===tc.id?{...x,balance:+(x.balance-total).toFixed(2),totalSpent:+(x.totalSpent+total).toFixed(2)}:x));
+    setTxs(p=>[...p,{id:Date.now(),cId:tc.id,type:"charge",paid:total,credited:-total,bonus:0,note:`رسوم الاستلام${pDelivery?" والتوصيل":""}`,date:toDay(),time:toTime()}]);
+    const savedAddress=pAddress,savedTime=pTime;
+    const pkp={id:`PKP-${String(pickups.length+1).padStart(3,"0")}`,cId:tc.id,cName:tc.name,cPhone:tc.phone,address:savedAddress,time:savedTime,notes:pNotes,delivery:pDelivery,fees,vat,total,status:"pending",createdAt:toDay(),timeStamp:toTime(),history:[{status:"pending",date:toDay(),time:toTime()}]};
+    setPickups(p=>[...p,pkp]);
+    setPCust(null);setPAddress("");setPTime("");setPNotes("");setPDelivery(true);
+    setModal(null);
+    showToast(`✓ تم طلب الاستلام ${pkp.id}`);
+    setTimeout(()=>openWA(tc.phone,WA.pickupConfirm(tc.name,pkp.id,savedAddress,savedTime,tc.phone)),700);
+    setTimeout(()=>openWA(CONFIG.DRIVER_PHONE,WA.driverPickup(tc.name,tc.phone,savedAddress,savedTime,pkp.id)),2000);
+  };
+
+  const updatePickupStatus=(pid,status)=>{
+    setPickups(p=>p.map(x=>x.id===pid?{...x,status,history:[...x.history,{status,date:toDay(),time:toTime()}]}:x));
+    showToast(`تم التحديث → ${PICKUP_STATUS[status].label}`);
+    const pkp=pickups.find(x=>x.id===pid);if(!pkp)return;
+    if(status==="onway")setTimeout(()=>openWA(pkp.cPhone,WA.pickupOnWay(pkp.cName,pkp.id,pkp.cPhone)),600);
+    if(status==="delivering")setTimeout(()=>openWA(pkp.cPhone,WA.deliveryOnWay(pkp.cName,pkp.id,pkp.cPhone)),600);
+  };
+
+  // Derived
+  const filtCusts=customers.filter(c=>c.name.includes(custSearch)||c.phone.includes(custSearch));
+  const filtOrders=[...orders].reverse().filter(o=>o.id.includes(orderSearch)||o.cName.includes(orderSearch)||o.cPhone.includes(orderSearch));
+  const totalRev=txs.filter(t=>t.type==="deposit").reduce((s,t)=>s+t.paid,0);
+  const totalSvc=txs.filter(t=>t.type==="charge").reduce((s,t)=>s+t.paid,0);
+  const totalBonus=txs.filter(t=>t.type==="deposit").reduce((s,t)=>s+t.bonus,0);
+  const pendingOrds=orders.filter(o=>o.status!=="delivered").length;
+  const pendingPkps=pickups.filter(p=>p.status!=="done").length;
+  const custTxsFn=cId=>txs.filter(t=>t.cId===cId).slice().reverse();
+  const loggedCust=customers.find(x=>x.phone===custPhone);
+  const custOrders=orders.filter(o=>o.cId===loggedCust?.id);
+  const custPickups=pickups.filter(p=>p.cId===loggedCust?.id);
+
+  // ── Shared Order Form ────────────────────────────────────
+  const OrderForm=({forPhone})=>{
+    const isCust=!!forPhone,tc=isCust?loggedCust:oCust;
+    const {grand,vat}=oGrand();
+    return (
+      <div>
+        {!isCust&&(
+          <div style={{marginBottom:14}}>
+            <div className="lbl">الزبون</div>
+            {oCust
+              ?<div style={{display:"flex",alignItems:"center",gap:10,background:"#eff6ff",border:"1.5px solid #bfdbfe",borderRadius:12,padding:"10px 14px"}}>
+                  <div style={{flex:1}}><div style={{fontWeight:700}}>{oCust.name}</div><div style={{fontSize:12,color:"#64748b"}}>رصيد: {fmt(oCust.balance)} ر.س</div></div>
+                  <button className="btn b-ghost b-sm" onClick={()=>setOCust(null)}>تغيير</button>
+                </div>
+              :<div style={{maxHeight:150,overflowY:"auto"}}>
+                  {customers.length===0?<div style={{color:"#94a3b8",fontSize:13,textAlign:"center",padding:10}}>أضف زبوناً أولاً</div>
+                    :customers.map(c=><div key={c.id} className="row-card" style={{marginBottom:6}} onClick={()=>setOCust(c)}><div style={{flex:1}}><div style={{fontWeight:700,fontSize:13}}>{c.name}</div><div style={{fontSize:12,color:"#64748b"}}>{c.phone} • {fmt(c.balance)} ر.س</div></div></div>)}
+                </div>}
+          </div>
+        )}
+        {isCust&&tc&&<div style={{background:"#eff6ff",border:"1.5px solid #bfdbfe",borderRadius:12,padding:"10px 14px",marginBottom:14,fontSize:13}}>💰 رصيدك: <strong style={{color:"#2563eb"}}>{fmt(tc.balance)} ر.س</strong></div>}
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"8px 0"}}>
+          <div><div style={{fontWeight:700,fontSize:13}}>⚡ طلب عاجل</div><div style={{fontSize:11,color:"#94a3b8"}}>رسوم إضافية 25%</div></div>
+          <button className={`toggle ${oUrgent?"tg-on":"tg-off"}`} onClick={()=>setOUrgent(p=>!p)}/>
+        </div>
+        <div className="divider"/>
+        <div className="lbl">الخدمات</div>
+        <div style={{display:"flex",gap:6,overflowX:"auto",paddingBottom:8,marginBottom:10,WebkitOverflowScrolling:"touch"}}>
+          {SVC_CATS.map(ct=><button key={ct} className={`chip ${oCat===ct?"on":""}`} onClick={()=>setOCat(ct)}>{ct}</button>)}
+        </div>
+        {SERVICES.filter(s=>oCat==="الكل"||s.cat===oCat).map(s=>(
+          <div key={s.id} className="svc-row">
+            <div style={{display:"flex",alignItems:"center",gap:8}}><span style={{fontSize:18}}>{s.icon}</span><div><div style={{fontSize:13,fontWeight:600}}>{s.name}</div><div style={{fontSize:11,color:"#64748b"}}>{s.price} ر.س</div></div></div>
+            <div style={{display:"flex",alignItems:"center",gap:6}}>
+              {iqty(s.id)>0&&<><button className="qty-btn q-m" onClick={()=>remOI(s.id)}>−</button><span style={{fontWeight:800,fontSize:14,minWidth:20,textAlign:"center"}}>{iqty(s.id)}</span></>}
+              <button className="qty-btn q-p" onClick={()=>addOI(s.id)}>+</button>
+            </div>
+          </div>
+        ))}
+        {oItems.length>0&&<div style={{background:"#f8fafc",border:"1.5px solid #e2e8f0",borderRadius:14,padding:"12px 14px",marginTop:10}}>
+          {oItems.map(i=>{const s=SERVICES.find(x=>x.id===i.sid);return <div key={i.sid} style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"3px 0"}}><span>{s?.icon} {s?.name} ×{i.qty}</span><span style={{fontWeight:700}}>{(s?.price||0)*i.qty} ر.س</span></div>;})}
+          {oUrgent&&<div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"#b45309",padding:"3px 0"}}><span>رسوم العجلة 25%</span><span>+{fmt(oBase()*0.25)} ر.س</span></div>}
+          <div style={{borderTop:"1px solid #e2e8f0",marginTop:6,paddingTop:6,display:"flex",justifyContent:"space-between",fontSize:12}}><span>ضريبة 15%</span><span>{fmt(vat)} ر.س</span></div>
+          <div style={{display:"flex",justifyContent:"space-between",fontSize:16,fontWeight:900,color:"#2563eb",marginTop:4}}><span>الإجمالي</span><span>{fmt(grand)} ر.س</span></div>
+        </div>}
+        <div className="divider"/>
+        <div className="lbl">طريقة الدفع</div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
+          {[{k:"balance",l:"💳 من الرصيد"},{k:"cash",l:"💵 نقداً"}].map(p=><button key={p.k} className={`btn ${oPay===p.k?"b-blue":"b-ghost"}`} onClick={()=>setOPay(p.k)}>{p.l}</button>)}
+        </div>
+        <div style={{marginBottom:16}}><div className="lbl">ملاحظات</div><textarea className="inp" rows={2} style={{resize:"none"}} value={oNotes} onChange={e=>setONotes(e.target.value)} placeholder="أي ملاحظات..."/></div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+          <button className="btn b-ghost" onClick={()=>setModal(null)}>إلغاء</button>
+          <button className="btn b-green" onClick={()=>submitOrder(forPhone)}>✓ إرسال الطلب</button>
+        </div>
+      </div>
+    );
+  };
+
+  // ── Shared Pickup Form ───────────────────────────────────
+  const PickupForm=({forPhone})=>{
+    const isCust=!!forPhone,tc=isCust?loggedCust:pCust;
+    const fees=CONFIG.PICKUP_FEE+(pDelivery?CONFIG.DELIVERY_FEE:0);
+    const total=+(fees*(1+CONFIG.VAT_RATE)).toFixed(2);
+    return (
+      <div>
+        {!isCust&&(
+          <div style={{marginBottom:14}}>
+            <div className="lbl">الزبون</div>
+            {pCust
+              ?<div style={{display:"flex",alignItems:"center",gap:10,background:"#fdf4ff",border:"1.5px solid #ddd6fe",borderRadius:12,padding:"10px 14px"}}>
+                  <div style={{flex:1}}><div style={{fontWeight:700}}>{pCust.name}</div><div style={{fontSize:12,color:"#64748b"}}>رصيد: {fmt(pCust.balance)} ر.س</div></div>
+                  <button className="btn b-ghost b-sm" onClick={()=>setPCust(null)}>تغيير</button>
+                </div>
+              :<div style={{maxHeight:150,overflowY:"auto"}}>
+                  {customers.length===0?<div style={{color:"#94a3b8",fontSize:13,textAlign:"center",padding:10}}>أضف زبوناً أولاً</div>
+                    :customers.map(c=><div key={c.id} className="row-card" style={{marginBottom:6}} onClick={()=>setPCust(c)}><div style={{flex:1}}><div style={{fontWeight:700,fontSize:13}}>{c.name}</div><div style={{fontSize:12,color:"#64748b"}}>{c.phone} • {fmt(c.balance)} ر.س</div></div></div>)}
+                </div>}
+          </div>
+        )}
+        {isCust&&tc&&<div style={{background:"#fdf4ff",border:"1.5px solid #ddd6fe",borderRadius:12,padding:"10px 14px",marginBottom:14,fontSize:13}}>💰 رصيدك: <strong style={{color:"#7c3aed"}}>{fmt(tc.balance)} ر.س</strong></div>}
+        <div style={{marginBottom:12}}><div className="lbl">📍 العنوان التفصيلي</div><textarea className="inp" rows={3} style={{resize:"none"}} placeholder="الحي، الشارع، رقم المنزل / العمارة..." value={pAddress} onChange={e=>setPAddress(e.target.value)}/></div>
+        <div style={{marginBottom:12}}><div className="lbl">⏰ وقت الاستلام المطلوب</div>
+          <select className="sel" value={pTime} onChange={e=>setPTime(e.target.value)}>
+            <option value="">اختر الوقت</option>
+            {TIMES.map(t=><option key={t} value={t}>{t}</option>)}
+          </select>
+        </div>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"10px 14px",background:"#f8fafc",borderRadius:12,marginBottom:12}}>
+          <div><div style={{fontWeight:700,fontSize:13}}>🚗 توصيل بعد الغسيل</div><div style={{fontSize:11,color:"#94a3b8"}}>يوصّل لمنزلك (+{CONFIG.DELIVERY_FEE} ر.س)</div></div>
+          <button className={`toggle ${pDelivery?"tg-on":"tg-off"}`} onClick={()=>setPDelivery(p=>!p)}/>
+        </div>
+        <div style={{background:"linear-gradient(135deg,#fdf4ff,#ede9fe)",border:"1.5px solid #ddd6fe",borderRadius:14,padding:"12px 14px",marginBottom:14}}>
+          <div style={{fontWeight:700,fontSize:13,color:"#7c3aed",marginBottom:8}}>💳 ملخص الرسوم</div>
+          <div style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"3px 0"}}><span>رسوم الاستلام</span><span style={{fontWeight:700}}>{CONFIG.PICKUP_FEE} ر.س</span></div>
+          {pDelivery&&<div style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"3px 0"}}><span>رسوم التوصيل</span><span style={{fontWeight:700}}>{CONFIG.DELIVERY_FEE} ر.س</span></div>}
+          <div style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"3px 0",color:"#64748b"}}><span>ضريبة 15%</span><span>{fmt(fees*CONFIG.VAT_RATE)} ر.س</span></div>
+          <div style={{borderTop:"1px solid #ddd6fe",marginTop:6,paddingTop:6,display:"flex",justifyContent:"space-between",fontSize:15,fontWeight:900,color:"#7c3aed"}}><span>الإجمالي</span><span>{fmt(total)} ر.س</span></div>
+          <div style={{fontSize:11,color:"#9ca3af",marginTop:4}}>* يُخصم من رصيدك فوراً</div>
+        </div>
+        <div style={{marginBottom:16}}><div className="lbl">ملاحظات للسائق</div><textarea className="inp" rows={2} style={{resize:"none"}} value={pNotes} onChange={e=>setPNotes(e.target.value)} placeholder="أي تعليمات خاصة..."/></div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+          <button className="btn b-ghost" onClick={()=>setModal(null)}>إلغاء</button>
+          <button className="btn b-purple" onClick={()=>submitPickup(forPhone)}>🚗 تأكيد الطلب</button>
+        </div>
+      </div>
+    );
+  };
+
+  /* ═══ SCREENS ═══════════════════════════════════════════ */
+
+  // Pending auto-login
+  if(pendingAuto) return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#eff6ff,#f1f5f9)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:20}}>
+      <div style={{textAlign:"center"}}>
+        <div style={{width:72,height:72,background:"linear-gradient(135deg,#2563eb,#1d4ed8)",borderRadius:22,display:"flex",alignItems:"center",justifyContent:"center",fontSize:36,margin:"0 auto 16px",boxShadow:"0 8px 24px #2563eb30"}}>🧺</div>
+        <div style={{fontSize:22,fontWeight:900,letterSpacing:3,marginBottom:2}}>NUQA</div>
+        <div style={{fontSize:13,color:"#2563eb",fontWeight:700,marginBottom:8}}>نُقاء</div>
+        <div style={{fontSize:14,color:"#64748b",marginBottom:24}}>جارٍ تحميل حسابك…</div>
+        <div className="spinner"/>
+      </div>
+      <div style={{marginTop:32,textAlign:"center"}}>
+        <input className="inp" style={{maxWidth:260,textAlign:"center"}} placeholder="05xxxxxxxx" defaultValue={pendingAuto}
+          onKeyDown={e=>{if(e.key==="Enter"){loginCust(fmtPh(e.target.value));setPendingAuto(null);}}}/>
+        <button className="btn b-blue" style={{marginTop:10,width:260}} onClick={()=>{loginCust(pendingAuto);setPendingAuto(null);}}>دخول</button>
+      </div>
+    </div>
+  );
+
+  // Login
+  if(!role) return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#eff6ff,#f1f5f9)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:20}}>
+      <div style={{textAlign:"center",marginBottom:32}}>
+        <div style={{width:72,height:72,background:"linear-gradient(135deg,#2563eb,#1d4ed8)",borderRadius:22,display:"flex",alignItems:"center",justifyContent:"center",fontSize:36,margin:"0 auto 14px",boxShadow:"0 8px 24px #2563eb30"}}>🧺</div>
+        <div style={{fontSize:28,fontWeight:900,letterSpacing:3,color:"#1e293b"}}>NUQA</div>
+        <div style={{fontSize:14,color:"#2563eb",fontWeight:700,marginTop:2}}>نُقاء</div>
+        <div style={{fontSize:12,color:"#94a3b8",marginTop:4}}>نظام إدارة الغسيل الذكي</div>
+      </div>
+      {loginMode==="choose"&&(
+        <div style={{width:"100%",maxWidth:380}}>
+          <div style={{fontSize:14,fontWeight:700,color:"#64748b",textAlign:"center",marginBottom:16}}>ادخل كـ</div>
+          <div style={{display:"flex",gap:14}}>
+            <div className="role-card" onClick={()=>setLoginMode("admin")}><div style={{fontSize:36,marginBottom:10}}>🔐</div><div style={{fontWeight:900,fontSize:15}}>صاحب المغسلة</div><div style={{fontSize:12,color:"#64748b",marginTop:6}}>إدارة كاملة</div></div>
+            <div className="role-card" onClick={()=>setLoginMode("customer")}><div style={{fontSize:36,marginBottom:10}}>👤</div><div style={{fontWeight:900,fontSize:15}}>زبون</div><div style={{fontSize:12,color:"#64748b",marginTop:6}}>رصيدي وطلباتي</div></div>
+          </div>
+        </div>
+      )}
+      {loginMode==="admin"&&(
+        <div className="card" style={{width:"100%",maxWidth:360}}>
+          <div style={{fontSize:18,fontWeight:900,marginBottom:18,textAlign:"center"}}>🔐 دخول المدير</div>
+          <div className="lbl">كلمة المرور</div>
+          <input className="inp" type="password" placeholder="أدخل كلمة المرور" value={adminPass} onChange={e=>setAdminPass(e.target.value)} onKeyDown={e=>e.key==="Enter"&&loginAdmin()} style={{marginBottom:14}}/>
+          {loginErr&&<div style={{color:"#dc2626",fontSize:12,marginBottom:10}}>{loginErr}</div>}
+          <button className="btn b-blue b-full" onClick={loginAdmin}>دخول</button>
+          <button className="btn b-ghost b-full" style={{marginTop:8}} onClick={()=>{setLoginMode("choose");setLoginErr("")}}>رجوع</button>
+        </div>
+      )}
+      {loginMode==="customer"&&(
+        <div className="card" style={{width:"100%",maxWidth:360}}>
+          <div style={{fontSize:18,fontWeight:900,marginBottom:6,textAlign:"center"}}>📱 دخول الزبون</div>
+          <div style={{fontSize:12,color:"#64748b",textAlign:"center",marginBottom:18,lineHeight:1.6}}>اضغط رابطك من واتساب للدخول التلقائي، أو أدخل رقم جوالك</div>
+          <div className="lbl">رقم الجوال</div>
+          <input className="inp" placeholder="05xxxxxxxx" value={custPhone} onChange={e=>setCustPhone(fmtPh(e.target.value))} onKeyDown={e=>e.key==="Enter"&&loginCust(custPhone)} maxLength={10} style={{marginBottom:14}}/>
+          {loginErr&&<div style={{color:"#dc2626",fontSize:12,marginBottom:10,lineHeight:1.6}}>{loginErr}</div>}
+          <button className="btn b-blue b-full" onClick={()=>loginCust(custPhone)}>دخول</button>
+          <button className="btn b-ghost b-full" style={{marginTop:8}} onClick={()=>{setLoginMode("choose");setLoginErr("")}}>رجوع</button>
+        </div>
+      )}
+    </div>
+  );
+
+  // ── CUSTOMER VIEW ──────────────────────────────────────
+  if(role==="customer"){
+    const c=loggedCust;
+    if(!c)return(<div style={{minHeight:"100vh",background:"#f1f5f9",display:"flex",alignItems:"center",justifyContent:"center",padding:20}}><div className="card" style={{textAlign:"center",maxWidth:340,width:"100%"}}><div style={{fontSize:40,marginBottom:12}}>⚠️</div><div style={{fontWeight:700,marginBottom:8}}>الحساب غير موجود</div><button className="btn b-ghost b-full" onClick={logout}>رجوع</button></div></div>);
+    return (
+      <div>
+        <div className="header">
+          <div style={{display:"flex",alignItems:"center",gap:10}}>
+            <div style={{width:38,height:38,background:"linear-gradient(135deg,#2563eb,#1d4ed8)",borderRadius:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>🧺</div>
+            <div><div style={{fontSize:15,fontWeight:900}}>{c.name}</div><div style={{fontSize:11,color:tierColor(c.tier),fontWeight:700}}>{c.tier}</div></div>
+          </div>
+          <button className="btn b-ghost b-sm" onClick={logout}>خروج</button>
+        </div>
+        <div className="page-wrap">
+          {custTab==="home"&&<>
+            <div style={{background:"linear-gradient(135deg,#2563eb,#1d4ed8)",borderRadius:20,padding:22,textAlign:"center",color:"#fff",marginBottom:16,boxShadow:"0 8px 24px #2563eb30"}}>
+              <div style={{fontSize:12,opacity:.85,marginBottom:6}}>رصيدي الحالي</div>
+              <div style={{fontSize:44,fontWeight:900,lineHeight:1}}>{fmt(c.balance)}</div>
+              <div style={{fontSize:14,opacity:.85,marginTop:4}}>ريال سعودي</div>
+              <div style={{display:"flex",justifyContent:"center",gap:24,marginTop:14}}>
+                <div><div style={{fontSize:14,fontWeight:800}}>{fmt(c.totalDeposited)}</div><div style={{fontSize:10,opacity:.75}}>إجمالي الشحن</div></div>
+                <div style={{width:1,background:"#ffffff30"}}/>
+                <div><div style={{fontSize:14,fontWeight:800}}>{fmt(c.totalSpent)}</div><div style={{fontSize:10,opacity:.75}}>إجمالي الإنفاق</div></div>
+              </div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
+              <button className="btn b-green b-full" style={{padding:14,fontSize:14}} onClick={()=>setModal("order-cust")}>📋 طلب غسيل</button>
+              <button className="btn b-purple b-full" style={{padding:14,fontSize:14}} onClick={()=>setModal("pickup-cust")}>🚗 استلام من المنزل</button>
+            </div>
+            {custPickups.filter(p=>p.status!=="done").length>0&&(
+              <div style={{background:"linear-gradient(135deg,#fdf4ff,#ede9fe)",border:"1.5px solid #ddd6fe",borderRadius:16,padding:14,marginBottom:16}}>
+                <div style={{fontWeight:700,color:"#7c3aed",marginBottom:8,fontSize:14}}>🚗 طلبات الاستلام النشطة</div>
+                {custPickups.filter(p=>p.status!=="done").map(p=>(
+                  <div key={p.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 0",borderBottom:"1px solid #ede9fe"}}>
+                    <div><div style={{fontWeight:700,fontSize:13}}>{p.id}</div><div style={{fontSize:11,color:"#64748b"}}>⏰ {p.time}</div></div>
+                    <div style={{background:PICKUP_STATUS[p.status].bg,color:PICKUP_STATUS[p.status].color,borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700}}>{PICKUP_STATUS[p.status].label}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="card" style={{marginBottom:16}}>
+              <div style={{fontSize:15,fontWeight:900,marginBottom:12}}>آخر طلباتي</div>
+              {custOrders.length===0?<div style={{textAlign:"center",color:"#94a3b8",padding:"18px 0",fontSize:13}}>لا توجد طلبات بعد</div>
+                :[...custOrders].reverse().slice(0,3).map(o=>(
+                  <div key={o.id} style={{background:"#f8fafc",borderRadius:12,padding:"11px 13px",marginBottom:8,border:"1.5px solid #e2e8f0"}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                      <div><div style={{fontWeight:700,fontSize:13}}>{o.id}</div><div style={{fontSize:11,color:"#64748b"}}>{o.createdAt}</div></div>
+                      <div style={{textAlign:"left"}}><div style={{background:ORDER_STATUS[o.status].bg,color:ORDER_STATUS[o.status].color,borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700,marginBottom:3}}>{ORDER_STATUS[o.status].label}</div><div style={{fontSize:13,fontWeight:900}}>{fmt(o.grand)} ر.س</div></div>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+            <div className="card">
+              <div style={{fontSize:14,fontWeight:700,marginBottom:8}}>🔗 رابط حسابي</div>
+              <div className="link-box" style={{marginBottom:10}}>{makeLink(c.phone)}</div>
+              <div style={{display:"flex",gap:8,marginBottom:12}}>
+                <button className="btn b-blue b-sm" style={{flex:1}} onClick={()=>{navigator.clipboard?.writeText(makeLink(c.phone));showToast("تم نسخ الرابط ✓");}}>نسخ</button>
+                <button className="btn b-wa b-sm" style={{flex:1}} onClick={()=>openWA(c.phone,`رابط حسابي في ${CONFIG.SHOP_NAME}:\n${makeLink(c.phone)}`)}>مشاركة</button>
+              </div>
+              <div style={{display:"flex",justifyContent:"center"}}><QR value={makeLink(c.phone)} size={140}/></div>
+            </div>
+          </>}
+          {custTab==="orders"&&<>
+            <div style={{fontSize:15,fontWeight:900,marginBottom:12}}>طلبات الغسيل ({custOrders.length})</div>
+            {[...custOrders].reverse().map(o=>(
+              <div key={o.id} style={{background:"#fff",borderRadius:14,border:"1.5px solid #e2e8f0",padding:"13px 15px",marginBottom:8}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div><div style={{fontWeight:800,fontSize:14}}>{o.id}</div><div style={{fontSize:12,color:"#64748b",marginTop:2}}>{o.createdAt} • {o.time}</div></div>
+                  <div style={{textAlign:"left"}}><div style={{background:ORDER_STATUS[o.status].bg,color:ORDER_STATUS[o.status].color,borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700,marginBottom:3}}>{ORDER_STATUS[o.status].label}</div><div style={{fontSize:14,fontWeight:900}}>{fmt(o.grand)} ر.س</div></div>
+                </div>
+              </div>
+            ))}
+          </>}
+          {custTab==="pickups"&&<>
+            <div style={{fontSize:15,fontWeight:900,marginBottom:12}}>طلبات الاستلام ({custPickups.length})</div>
+            <button className="btn b-purple b-full" style={{marginBottom:14}} onClick={()=>setModal("pickup-cust")}>🚗 طلب استلام جديد</button>
+            {[...custPickups].reverse().map(p=>(
+              <div key={p.id} className="pickup-card">
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                  <div><div style={{fontWeight:800,fontSize:14,color:"#7c3aed"}}>{p.id}</div><div style={{fontSize:12,color:"#64748b",marginTop:3}}>📍 {p.address}</div><div style={{fontSize:12,color:"#64748b"}}>⏰ {p.time}</div></div>
+                  <div style={{textAlign:"left"}}><div style={{background:PICKUP_STATUS[p.status].bg,color:PICKUP_STATUS[p.status].color,borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700,marginBottom:4}}>{PICKUP_STATUS[p.status].label}</div><div style={{fontSize:13,fontWeight:900,color:"#7c3aed"}}>{fmt(p.total)} ر.س</div></div>
+                </div>
+              </div>
+            ))}
+          </>}
+        </div>
+        <div className="bottom-nav"><div style={{maxWidth:600,margin:"0 auto"}}>
+          <div className="tab-bar">
+            {[{k:"home",i:"🏠",l:"الرئيسية"},{k:"orders",i:"📋",l:"الطلبات"},{k:"pickups",i:"🚗",l:"استلام"}].map(t=>(
+              <button key={t.k} className={`tab-btn ${custTab===t.k?"on":""}`} onClick={()=>setCustTab(t.k)}>
+                <span className="tab-icon">{t.i}</span>{t.l}
+              </button>
+            ))}
+          </div>
+        </div></div>
+        {modal==="order-cust"&&<div className="sheet-bg" onClick={()=>setModal(null)}><div className="sheet" onClick={e=>e.stopPropagation()}><div className="handle"/><div style={{fontSize:17,fontWeight:900,marginBottom:16}}>📋 طلب غسيل جديد</div><OrderForm forPhone={custPhone}/></div></div>}
+        {modal==="pickup-cust"&&<div className="sheet-bg" onClick={()=>setModal(null)}><div className="sheet" onClick={e=>e.stopPropagation()}><div className="handle"/><div style={{fontSize:17,fontWeight:900,marginBottom:4}}>🚗 استلام من المنزل</div><div style={{fontSize:12,color:"#64748b",marginBottom:16}}>سيأتي السائق لاستلام ملابسك وإعادتها بعد الغسيل</div><PickupForm forPhone={custPhone}/></div></div>}
+        {toast&&<div className="toast-wrap"><div className={`toast ${toast.type==="success"?"t-s":"t-e"}`}>{toast.msg}</div></div>}
+      </div>
+    );
+  }
+
+  // ── ADMIN VIEW ─────────────────────────────────────────
+  return (
+    <div>
+      <div className="header">
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <div style={{width:40,height:40,background:"linear-gradient(135deg,#2563eb,#1d4ed8)",borderRadius:13,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22}}>🧺</div>
+          <div><div style={{fontSize:17,fontWeight:900}}>{CONFIG.SHOP_NAME}</div><div style={{fontSize:10,color:"#94a3b8"}}>لوحة تحكم المدير</div></div>
+        </div>
+        <div style={{display:"flex",gap:6,alignItems:"center"}}>
+          {pendingPkps>0&&<span style={{background:"#ede9fe",color:"#7c3aed",borderRadius:20,padding:"4px 9px",fontSize:11,fontWeight:700}}>🚗 {pendingPkps}</span>}
+          {pendingOrds>0&&<span style={{background:"#fef9c3",color:"#92400e",borderRadius:20,padding:"4px 9px",fontSize:11,fontWeight:700}}>⏳ {pendingOrds}</span>}
+          <span style={{background:"#dbeafe",color:"#1d4ed8",borderRadius:20,padding:"4px 9px",fontSize:11,fontWeight:700}}>👥 {customers.length}</span>
+          <button className="btn b-ghost b-sm" onClick={logout}>خروج</button>
+        </div>
+      </div>
+      <div className="page-wrap">
+        {tab==="home"&&<>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:16}}>
+            {[{l:"الشحن",v:totalRev,c:"#2563eb"},{l:"الخدمات",v:totalSvc,c:"#059669"},{l:"المكافآت",v:totalBonus,c:"#d97706"}].map(s=>(
+              <div key={s.l} className="stat-box"><div style={{fontSize:10,color:"#94a3b8",marginBottom:3}}>{s.l}</div><div style={{fontSize:18,fontWeight:900,color:s.c}}>{fmt(s.v)}</div><div style={{fontSize:10,color:"#94a3b8"}}>ريال</div></div>
+            ))}
+          </div>
+          <div className="card" style={{marginBottom:16}}>
+            <div style={{fontSize:16,fontWeight:900,marginBottom:12}}>الإجراءات السريعة</div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+              <button className="btn b-blue b-full" onClick={()=>setModal("add-customer")}>➕ زبون جديد</button>
+              <button className="btn b-green b-full" onClick={()=>setModal("new-order")}>📋 طلب غسيل</button>
+              <button className="btn b-purple b-full" style={{gridColumn:"span 2"}} onClick={()=>setModal("new-pickup")}>🚗 طلب استلام من المنزل</button>
+            </div>
+          </div>
+          {pickups.filter(p=>p.status!=="done").length>0&&(
+            <div className="card" style={{marginBottom:16,borderColor:"#ddd6fe"}}>
+              <div style={{fontSize:15,fontWeight:900,marginBottom:12,color:"#7c3aed"}}>🚗 الاستلامات النشطة ({pickups.filter(p=>p.status!=="done").length})</div>
+              {pickups.filter(p=>p.status!=="done").map(p=>(
+                <div key={p.id} className="pickup-card" onClick={()=>{setSelPickup(p);setModal("pickup-detail")}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <div><div style={{fontWeight:700,fontSize:13,color:"#7c3aed"}}>{p.id} — {p.cName}</div><div style={{fontSize:11,color:"#64748b",marginTop:2}}>📍 {p.address.slice(0,30)}{p.address.length>30?"...":""}</div><div style={{fontSize:11,color:"#64748b"}}>⏰ {p.time}</div></div>
+                    <div style={{background:PICKUP_STATUS[p.status].bg,color:PICKUP_STATUS[p.status].color,borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700}}>{PICKUP_STATUS[p.status].label}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="card">
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+              <div style={{fontSize:15,fontWeight:900}}>آخر الطلبات</div>
+              <button className="btn b-ghost b-sm" onClick={()=>setTab("orders")}>عرض الكل</button>
+            </div>
+            {orders.length===0?<div style={{textAlign:"center",color:"#94a3b8",padding:"18px 0",fontSize:13}}>لا توجد طلبات</div>
+              :[...orders].reverse().slice(0,3).map(o=>(
+                <div key={o.id} style={{background:"#f8fafc",borderRadius:12,padding:"11px 13px",marginBottom:8,cursor:"pointer",border:"1.5px solid #e2e8f0"}} onClick={()=>{setSelOrder(o);setModal("order-detail")}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <div><div style={{fontWeight:700,fontSize:13}}>{o.id}</div><div style={{fontSize:11,color:"#64748b"}}>{o.cName} • {o.createdAt}</div></div>
+                    <div style={{textAlign:"left"}}><div style={{background:ORDER_STATUS[o.status].bg,color:ORDER_STATUS[o.status].color,borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700}}>{ORDER_STATUS[o.status].label}</div><div style={{fontSize:13,fontWeight:900,marginTop:3}}>{fmt(o.grand)} ر.س</div></div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </>}
+        {tab==="customers"&&<>
+          <div style={{display:"flex",gap:8,marginBottom:14}}>
+            <input className="inp" style={{flex:1}} placeholder="🔍 بحث" value={custSearch} onChange={e=>setCustSearch(e.target.value)}/>
+            <button className="btn b-blue" onClick={()=>setModal("add-customer")}>➕</button>
+          </div>
+          <div style={{fontSize:15,fontWeight:900,marginBottom:12}}>الزبائن ({filtCusts.length})</div>
+          {filtCusts.length===0&&<div style={{textAlign:"center",color:"#94a3b8",padding:40}}>لا يوجد زبائن</div>}
+          {filtCusts.map(c=>(
+            <div key={c.id} className="row-card" onClick={()=>{setSelCust(c);setModal("customer-detail")}}>
+              <div style={{width:42,height:42,background:"linear-gradient(135deg,#eff6ff,#dbeafe)",borderRadius:13,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>👤</div>
+              <div style={{flex:1}}><div style={{fontWeight:700,fontSize:14}}>{c.name} {c.tier!=="عادي"&&<span style={{fontSize:11,color:tierColor(c.tier),fontWeight:700}}>{c.tier}</span>}</div><div style={{fontSize:12,color:"#64748b"}}>📱 {c.phone}</div></div>
+              <div style={{textAlign:"left"}}><div style={{fontSize:17,fontWeight:900,color:c.balance>0?"#059669":"#94a3b8"}}>{fmt(c.balance)}</div><div style={{fontSize:10,color:"#94a3b8"}}>ريال</div></div>
+            </div>
+          ))}
+        </>}
+        {tab==="orders"&&<>
+          <div style={{display:"flex",gap:8,marginBottom:14}}>
+            <input className="inp" style={{flex:1}} placeholder="🔍 رقم الطلب أو الزبون" value={orderSearch} onChange={e=>setOrderSearch(e.target.value)}/>
+            <button className="btn b-green" onClick={()=>setModal("new-order")}>📋</button>
+          </div>
+          <div style={{fontSize:15,fontWeight:900,marginBottom:12}}>طلبات الغسيل ({orders.length})</div>
+          {filtOrders.length===0&&<div style={{textAlign:"center",color:"#94a3b8",padding:40}}>لا توجد طلبات</div>}
+          {filtOrders.map(o=>(
+            <div key={o.id} className="row-card" style={{display:"block"}} onClick={()=>{setSelOrder(o);setModal("order-detail")}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <div><div style={{fontWeight:800,fontSize:14}}>{o.id} {o.urgent&&<span style={{background:"#fef9c3",color:"#92400e",borderRadius:7,padding:"1px 7px",fontSize:10,fontWeight:700}}>عاجل</span>}</div><div style={{fontSize:12,color:"#64748b",marginTop:2}}>{o.cName} • {o.cPhone}</div><div style={{fontSize:11,color:"#94a3b8",marginTop:2}}>{o.createdAt} {o.time}</div></div>
+                <div style={{textAlign:"left"}}><div style={{background:ORDER_STATUS[o.status].bg,color:ORDER_STATUS[o.status].color,borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700,marginBottom:4}}>{ORDER_STATUS[o.status].label}</div><div style={{fontSize:14,fontWeight:900}}>{fmt(o.grand)} ر.س</div></div>
+              </div>
+            </div>
+          ))}
+        </>}
+        {tab==="pickups"&&<>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+            <div style={{fontSize:15,fontWeight:900}}>طلبات الاستلام ({pickups.length})</div>
+            <button className="btn b-purple b-sm" onClick={()=>setModal("new-pickup")}>🚗 جديد</button>
+          </div>
+          {pickups.length===0&&<div style={{textAlign:"center",color:"#94a3b8",padding:40}}>لا توجد طلبات استلام</div>}
+          {[...pickups].reverse().map(p=>(
+            <div key={p.id} className="pickup-card" onClick={()=>{setSelPickup(p);setModal("pickup-detail")}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                <div><div style={{fontWeight:800,fontSize:14,color:"#7c3aed"}}>{p.id}</div><div style={{fontSize:13,fontWeight:600,marginTop:2}}>{p.cName}</div><div style={{fontSize:12,color:"#64748b",marginTop:2}}>📍 {p.address}</div><div style={{fontSize:12,color:"#64748b"}}>⏰ {p.time} • {p.createdAt}</div></div>
+                <div style={{textAlign:"left"}}><div style={{background:PICKUP_STATUS[p.status].bg,color:PICKUP_STATUS[p.status].color,borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700,marginBottom:4}}>{PICKUP_STATUS[p.status].label}</div><div style={{fontSize:13,fontWeight:900,color:"#7c3aed"}}>{fmt(p.total)} ر.س</div></div>
+              </div>
+            </div>
+          ))}
+        </>}
+        {tab==="txs"&&<>
+          <div style={{fontSize:15,fontWeight:900,marginBottom:12}}>سجل العمليات ({txs.length})</div>
+          {txs.length===0&&<div style={{textAlign:"center",color:"#94a3b8",padding:40}}>لا توجد عمليات</div>}
+          {[...txs].reverse().map(tx=>{
+            const c=customers.find(x=>x.id===tx.cId);
+            return <div key={tx.id} style={{background:"#fff",borderRadius:14,border:"1.5px solid #e2e8f0",padding:"13px 15px",marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <div><div style={{fontWeight:700,fontSize:13}}>{c?.name||"—"}</div><div style={{fontSize:12,color:"#64748b"}}>{tx.note}</div><div style={{fontSize:11,color:"#94a3b8",marginTop:2}}>{tx.date} • {tx.time}</div></div>
+              <div style={{textAlign:"left"}}>
+                {tx.type==="deposit"?<><div style={{background:"#dbeafe",color:"#1d4ed8",borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700,marginBottom:3}}>شحن</div><div style={{fontSize:14,fontWeight:900,color:"#059669"}}>+{fmt(tx.credited)}</div></>
+                  :<><div style={{background:"#fee2e2",color:"#b91c1c",borderRadius:9,padding:"2px 9px",fontSize:10,fontWeight:700,marginBottom:3}}>خصم</div><div style={{fontSize:14,fontWeight:900,color:"#dc2626"}}>-{fmt(tx.paid)}</div></>}
+              </div>
+            </div>;
+          })}
+        </>}
+      </div>
+
+      <div className="bottom-nav"><div style={{maxWidth:600,margin:"0 auto"}}>
+        <div className="tab-bar">
+          {[{k:"home",i:"🏠",l:"الرئيسية"},{k:"customers",i:"👥",l:"الزبائن"},{k:"orders",i:"📋",l:"الطلبات"},{k:"pickups",i:"🚗",l:"الاستلام"},{k:"txs",i:"📊",l:"السجل"}].map(t=>(
+            <button key={t.k} className={`tab-btn ${tab===t.k?"on":""}`} onClick={()=>setTab(t.k)}>
+              <span className="tab-icon">{t.i}</span>{t.l}
+            </button>
+          ))}
+        </div>
+      </div></div>
+
+      {/* ═══ MODALS ═══ */}
+      {modal==="add-customer"&&<div className="sheet-bg" onClick={()=>setModal(null)}><div className="sheet" onClick={e=>e.stopPropagation()}>
+        <div className="handle"/><div style={{fontSize:17,fontWeight:900,marginBottom:16}}>➕ إضافة زبون جديد</div>
+        <div style={{marginBottom:12}}><div className="lbl">الاسم الكامل</div><input className="inp" placeholder="محمد العمري" value={newCust.name} onChange={e=>setNewCust(p=>({...p,name:e.target.value}))}/></div>
+        <div style={{marginBottom:12}}><div className="lbl">رقم الجوال</div><input className="inp" placeholder="05xxxxxxxx" value={newCust.phone} onChange={e=>setNewCust(p=>({...p,phone:fmtPh(e.target.value)}))} maxLength={10}/></div>
+        <div style={{marginBottom:16}}><div className="lbl">ملاحظات</div><textarea className="inp" rows={2} style={{resize:"none"}} value={newCust.notes} onChange={e=>setNewCust(p=>({...p,notes:e.target.value}))}/></div>
+        {newCust.name&&newCust.phone.length>=9&&<><div className="lbl">💬 معاينة رسالة الترحيب</div><div className="wa-prev" style={{marginBottom:16}}>{WA.welcome(newCust.name,newCust.phone)}</div></>}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+          <button className="btn b-ghost" onClick={()=>setModal(null)}>إلغاء</button>
+          <button className="btn b-blue" onClick={addCustomer}>💾 حفظ + واتساب</button>
+        </div>
+      </div></div>}
+
+      {modal==="customer-detail"&&selCust&&<div className="sheet-bg" onClick={()=>setModal(null)}><div className="sheet" onClick={e=>e.stopPropagation()}>
+        <div className="handle"/>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:16}}>
+          <div><div style={{fontSize:20,fontWeight:900}}>{selCust.name}</div><div style={{fontSize:13,color:"#64748b"}}>📱 {selCust.phone}</div><div style={{fontSize:12,color:tierColor(selCust.tier),fontWeight:700,marginTop:3}}>{selCust.tier}</div></div>
+          <button className="btn b-ghost b-sm" onClick={()=>setModal(null)}>✕</button>
+        </div>
+        <div style={{background:"linear-gradient(135deg,#eff6ff,#dbeafe)",borderRadius:16,padding:16,textAlign:"center",marginBottom:16}}>
+          <div style={{fontSize:11,color:"#2563eb",fontWeight:700}}>الرصيد الحالي</div>
+          <div style={{fontSize:38,fontWeight:900,color:"#2563eb",lineHeight:1.1}}>{fmt(selCust.balance)}</div>
+          <div style={{fontSize:13,color:"#3b82f6"}}>ريال سعودي</div>
+          <div style={{display:"flex",justifyContent:"center",gap:24,marginTop:10}}>
+            <div><div style={{fontSize:13,fontWeight:800,color:"#059669"}}>{fmt(selCust.totalDeposited)}</div><div style={{fontSize:10,color:"#64748b"}}>إجمالي الشحن</div></div>
+            <div><div style={{fontSize:13,fontWeight:800,color:"#dc2626"}}>{fmt(selCust.totalSpent)}</div><div style={{fontSize:10,color:"#64748b"}}>إجمالي الإنفاق</div></div>
+          </div>
+          {(()=>{const next=selCust.totalDeposited<400?400:selCust.totalDeposited<1000?1000:2000;const pct=Math.min((selCust.totalDeposited/next)*100,100);return<div style={{marginTop:10}}><div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"#64748b",marginBottom:3}}><span>نحو المستوى التالي</span><span>{fmt(selCust.totalDeposited)}/{next} ر.س</span></div><div className="progress-bar"><div className="progress-fill" style={{width:`${pct}%`}}/></div></div>;})()}
+        </div>
+        <div style={{marginBottom:14}}>
+          <div className="lbl">💰 شحن رصيد (مكافأة 30%)</div>
+          <div style={{display:"flex",gap:8}}><input className="inp" style={{flex:1}} type="number" placeholder="المبلغ" value={depositAmt} onChange={e=>setDeposit(e.target.value)}/><button className="btn b-green" onClick={()=>deposit(selCust.id)}>شحن</button></div>
+          {depositAmt&&+depositAmt>0&&<div style={{marginTop:7,background:"#f0fdf4",border:"1px solid #86efac",borderRadius:10,padding:"7px 12px",fontSize:12,color:"#15803d",fontWeight:700}}>✨ سيحصل على {fmt(+depositAmt*1.3)} ريال (مكافأة {fmt(+depositAmt*0.3)} ريال)</div>}
+        </div>
+        <div style={{marginBottom:14}}>
+          <div className="lbl">🧾 خصم مقابل خدمة</div>
+          <div style={{display:"flex",gap:8,marginBottom:7}}><input className="inp" style={{flex:1}} type="number" placeholder="المبلغ" value={chargeAmt} onChange={e=>setCharge(e.target.value)}/><button className="btn b-red" onClick={()=>chargeBalance(selCust.id)}>خصم</button></div>
+          <input className="inp" placeholder="وصف الخدمة" value={chargeNote} onChange={e=>setChargeNote(e.target.value)}/>
+        </div>
+        <div className="divider"/>
+        <div className="lbl">🔗 رابط الزبون</div>
+        <div className="link-box" style={{marginBottom:8}}>{makeLink(selCust.phone)}</div>
+        <div style={{display:"flex",gap:8,marginBottom:12}}>
+          <button className="btn b-blue b-sm" style={{flex:1}} onClick={()=>{navigator.clipboard?.writeText(makeLink(selCust.phone));showToast("تم نسخ الرابط ✓");}}>نسخ</button>
+          <button className="btn b-wa b-sm" style={{flex:1}} onClick={()=>openWA(selCust.phone,WA.welcome(selCust.name,selCust.phone))}>إرسال واتساب</button>
+        </div>
+        <div style={{display:"flex",justifyContent:"center",marginBottom:14}}><QR value={makeLink(selCust.phone)} size={120}/></div>
+        <div className="lbl">📲 إشعارات</div>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
+          <button className="btn b-wa b-sm" onClick={()=>openWA(selCust.phone,WA.lowBalance(selCust.name,selCust.balance,selCust.phone))}>⚠️ تنبيه رصيد</button>
+          <button className="btn b-wa b-sm" onClick={()=>openWA(selCust.phone,`أهلاً ${selCust.name} 👋\nرصيدك: *${fmt(selCust.balance)} ريال* 💰\n📲 ${makeLink(selCust.phone)}`)}>💰 رصيدي</button>
+        </div>
+        <div className="divider"/><div className="lbl">سجل العمليات</div>
+        {custTxsFn(selCust.id).length===0?<div style={{color:"#94a3b8",fontSize:12,textAlign:"center",padding:"10px 0"}}>لا توجد عمليات</div>
+          :custTxsFn(selCust.id).map(tx=>(
+            <div key={tx.id} style={{display:"flex",justifyContent:"space-between",padding:"8px 0",borderBottom:"1px solid #f1f5f9"}}>
+              <div><div style={{fontSize:13,fontWeight:600}}>{tx.note}</div><div style={{fontSize:11,color:"#94a3b8"}}>{tx.date} • {tx.time}</div></div>
+              <div style={{fontWeight:900,fontSize:14,color:tx.type==="deposit"?"#059669":"#dc2626"}}>{tx.type==="deposit"?`+${fmt(tx.credited)}`:`-${fmt(tx.paid)}`}</div>
+            </div>
+          ))}
+      </div></div>}
+
+      {modal==="new-order"&&<div className="sheet-bg" onClick={()=>setModal(null)}><div className="sheet" onClick={e=>e.stopPropagation()}><div className="handle"/><div style={{fontSize:17,fontWeight:900,marginBottom:16}}>📋 طلب غسيل جديد</div><OrderForm forPhone={null}/></div></div>}
+
+      {modal==="new-pickup"&&<div className="sheet-bg" onClick={()=>setModal(null)}><div className="sheet" onClick={e=>e.stopPropagation()}><div className="handle"/><div style={{fontSize:17,fontWeight:900,marginBottom:4}}>🚗 طلب استلام من المنزل</div><div style={{fontSize:12,color:"#64748b",marginBottom:16}}>سيتوجه السائق لاستلام الملابس وإعادتها بعد الغسيل</div><PickupForm forPhone={null}/></div></div>}
+
+      {modal==="pickup-detail"&&selPickup&&<div className="sheet-bg" onClick={()=>setModal(null)}><div className="sheet" onClick={e=>e.stopPropagation()}>
+        <div className="handle"/>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+          <div><div style={{fontSize:18,fontWeight:900,color:"#7c3aed"}}>{selPickup.id}</div><div style={{fontSize:12,color:"#64748b"}}>{selPickup.createdAt} • {selPickup.timeStamp}</div></div>
+          <button className="btn b-ghost b-sm" onClick={()=>setModal(null)}>✕</button>
+        </div>
+        <div style={{background:"#fdf4ff",border:"1.5px solid #ddd6fe",borderRadius:12,padding:"11px 13px",marginBottom:14}}>
+          <div style={{fontWeight:700}}>{selPickup.cName}</div><div style={{fontSize:12,color:"#64748b"}}>📱 {selPickup.cPhone}</div>
+          <div style={{fontSize:12,color:"#64748b",marginTop:4}}>📍 {selPickup.address}</div>
+          <div style={{fontSize:12,color:"#64748b"}}>⏰ {selPickup.time}</div>
+          {selPickup.notes&&<div style={{fontSize:12,color:"#94a3b8",marginTop:4}}>📝 {selPickup.notes}</div>}
+          {selPickup.delivery&&<div style={{fontSize:12,color:"#7c3aed",marginTop:4,fontWeight:700}}>🚗 يشمل التوصيل للمنزل</div>}
+        </div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:13,padding:"4px 0"}}><span>الرسوم</span><span>{selPickup.fees} ر.س</span></div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:13,padding:"4px 0"}}><span>ضريبة 15%</span><span>{fmt(selPickup.vat)} ر.س</span></div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:16,fontWeight:900,color:"#7c3aed",padding:"6px 0"}}><span>الإجمالي</span><span>{fmt(selPickup.total)} ر.س</span></div>
+        <div className="divider"/>
+        <div className="lbl">تحديث الحالة</div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
+          {Object.entries(PICKUP_STATUS).map(([k,v])=>(
+            <button key={k} onClick={()=>updatePickupStatus(selPickup.id,k)}
+              style={{padding:"9px 8px",borderRadius:12,border:`2px solid ${selPickup.status===k?v.dot:"#e2e8f0"}`,background:selPickup.status===k?v.bg:"#fff",color:selPickup.status===k?v.color:"#64748b",fontWeight:700,fontSize:11,cursor:"pointer",transition:".15s"}}>
+              <span style={{display:"inline-block",width:8,height:8,background:v.dot,borderRadius:"50%",marginLeft:5}}/>{v.label}
+            </button>
+          ))}
+        </div>
+        <div className="lbl">📲 إشعارات واتساب</div>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+          <button className="btn b-wa b-sm" onClick={()=>openWA(selPickup.cPhone,WA.pickupOnWay(selPickup.cName,selPickup.id,selPickup.cPhone))}>🚗 السائق في الطريق</button>
+          <button className="btn b-wa b-sm" onClick={()=>openWA(selPickup.cPhone,WA.deliveryOnWay(selPickup.cName,selPickup.id,selPickup.cPhone))}>📦 جارٍ التوصيل</button>
+          <button className="btn b-wa b-sm" onClick={()=>openWA(CONFIG.DRIVER_PHONE,WA.driverPickup(selPickup.cName,selPickup.cPhone,selPickup.address,selPickup.time,selPickup.id))}>👷 إشعار السائق</button>
+        </div>
+        <div className="divider"/><div className="lbl">تاريخ الطلب</div>
+        {selPickup.history.map((h,i)=>(
+          <div key={i} style={{display:"flex",gap:10,padding:"5px 0",alignItems:"center",borderBottom:"1px solid #f1f5f9"}}>
+            <div style={{width:9,height:9,background:PICKUP_STATUS[h.status].dot,borderRadius:"50%",flexShrink:0}}/>
+            <div style={{fontSize:12}}><strong>{PICKUP_STATUS[h.status].label}</strong> • {h.date} {h.time}</div>
+          </div>
+        ))}
+      </div></div>}
+
+      {modal==="order-detail"&&selOrder&&<div className="sheet-bg" onClick={()=>setModal(null)}><div className="sheet" onClick={e=>e.stopPropagation()}>
+        <div className="handle"/>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+          <div><div style={{fontSize:18,fontWeight:900}}>{selOrder.id} {selOrder.urgent&&<span style={{background:"#fef9c3",color:"#92400e",borderRadius:7,padding:"1px 7px",fontSize:10,fontWeight:700}}>عاجل</span>}</div><div style={{fontSize:12,color:"#64748b"}}>{selOrder.createdAt} • {selOrder.time}</div></div>
+          <button className="btn b-ghost b-sm" onClick={()=>setModal(null)}>✕</button>
+        </div>
+        <div style={{background:"#f8fafc",borderRadius:12,padding:"11px 13px",marginBottom:14,border:"1.5px solid #e2e8f0"}}><div style={{fontWeight:700}}>{selOrder.cName}</div><div style={{fontSize:12,color:"#64748b"}}>📱 {selOrder.cPhone}</div></div>
+        <div className="lbl">تحديث الحالة</div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
+          {Object.entries(ORDER_STATUS).map(([k,v])=>(
+            <button key={k} onClick={()=>updateOrderStatus(selOrder.id,k)}
+              style={{padding:"9px 8px",borderRadius:12,border:`2px solid ${selOrder.status===k?v.dot:"#e2e8f0"}`,background:selOrder.status===k?v.bg:"#fff",color:selOrder.status===k?v.color:"#64748b",fontWeight:700,fontSize:11,cursor:"pointer",transition:".15s"}}>
+              <span style={{display:"inline-block",width:8,height:8,background:v.dot,borderRadius:"50%",marginLeft:5}}/>{v.label}
+            </button>
+          ))}
+        </div>
+        <div className="lbl">الخدمات</div>
+        {selOrder.items.map(i=>{const s=SERVICES.find(x=>x.id===i.sid);return<div key={i.sid} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:"1px solid #f1f5f9",fontSize:13}}><span>{s?.icon} {s?.name} ×{i.qty}</span><span style={{fontWeight:700}}>{(s?.price||0)*i.qty} ر.س</span></div>;})}
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"3px 0",marginTop:6}}><span>ضريبة 15%</span><span>{fmt(selOrder.vat)} ر.س</span></div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:16,fontWeight:900,color:"#2563eb",padding:"6px 0"}}><span>الإجمالي</span><span>{fmt(selOrder.grand)} ر.س</span></div>
+        <div className="divider"/>
+        <div className="lbl">📲 إشعارات واتساب</div>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+          <button className="btn b-wa b-sm" onClick={()=>openWA(selOrder.cPhone,WA.orderReady(selOrder.cName,selOrder.id,selOrder.cPhone))}>🎉 جاهز للاستلام</button>
+          <button className="btn b-wa b-sm" onClick={()=>openWA(selOrder.cPhone,`أهلاً ${selOrder.cName} 👋\nطلبك *${selOrder.id}* قيد التنظيف 🧺\nسنبلغك عند الجاهزية.\n${CONFIG.SHOP_NAME}`)}>⏳ قيد التنظيف</button>
+        </div>
+        <div className="divider"/><div className="lbl">تاريخ الطلب</div>
+        {selOrder.history.map((h,i)=>(
+          <div key={i} style={{display:"flex",gap:10,padding:"5px 0",alignItems:"center"}}>
+            <div style={{width:9,height:9,background:ORDER_STATUS[h.status].dot,borderRadius:"50%",flexShrink:0}}/>
+            <div style={{fontSize:12}}><strong>{ORDER_STATUS[h.status].label}</strong> • {h.date} {h.time}</div>
+          </div>
+        ))}
+      </div></div>}
+
+      {toast&&<div className="toast-wrap"><div className={`toast ${toast.type==="success"?"t-s":"t-e"}`}>{toast.msg}</div></div>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("app")).render(React.createElement(App));
+</script>
+</body>
+</html>
